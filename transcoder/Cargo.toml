@@ -17,3 +17,5 @@ config.workspace = true
 dotenvy.workspace = true
 uuid.workspace = true
 chrono.workspace = true
+nectar-proto.workspace = true
+hostname = "0.4"

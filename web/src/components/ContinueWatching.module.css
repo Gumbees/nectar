@@ -1,0 +1,103 @@
+.container {
+  padding: var(--space-4) 0;
+}
+
+.header {
+  font-size: var(--font-xl);
+  font-weight: var(--weight-semibold);
+  margin-bottom: var(--space-4);
+  padding: 0 var(--space-4);
+}
+
+.row {
+  display: flex;
+  gap: var(--space-4);
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  scroll-padding: var(--space-4);
+  padding: 0 var(--space-4) var(--space-2);
+  -webkit-overflow-scrolling: touch;
+}
+
+.row::-webkit-scrollbar {
+  height: 4px;
+}
+
+.row::-webkit-scrollbar-thumb {
+  background: var(--border);
+  border-radius: var(--radius-full);
+}
+
+.item {
+  flex-shrink: 0;
+  width: 280px;
+  scroll-snap-align: start;
+}
+
+.card {
+  display: block;
+  border-radius: var(--radius-md);
+  overflow: hidden;
+  background: var(--bg-card);
+  transition: transform var(--transition-normal), box-shadow var(--transition-normal);
+}
+
+.card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 16px var(--shadow);
+}
+
+.thumb {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  overflow: hidden;
+  background: var(--bg-secondary);
+}
+
+.thumbImg {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.progressBar {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 4px;
+  background: rgba(255, 255, 255, 0.2);
+}
+
+.progressFill {
+  height: 100%;
+  background: var(--accent);
+}
+
+.meta {
+  padding: var(--space-3);
+}
+
+.title {
+  font-size: var(--font-sm);
+  font-weight: var(--weight-medium);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.subtitle {
+  font-size: var(--font-xs);
+  color: var(--text-secondary);
+  margin-top: var(--space-1);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+@media (max-width: 480px) {
+  .item {
+    width: 240px;
+  }
+}

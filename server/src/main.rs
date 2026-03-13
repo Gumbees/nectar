@@ -7,6 +7,7 @@ use tower_http::{
 use tracing_subscriber::{EnvFilter, layer::SubscriberExt, util::SubscriberInitExt};
 
 mod api;
+mod auth;
 mod config;
 mod db;
 mod media;
@@ -27,7 +28,19 @@ async fn main() -> Result<()> {
 
     sqlx::migrate!("./migrations").run(&db).await?;
 
-    let state = api::AppState::new(db, config.clone());
+    // Connect to NATS (non-fatal if unavailable)
+    let nats = match async_nats::connect(&config.nats_url).await {
+        Ok(client) => {
+            tracing::info!("connected to nats at {}", config.nats_url);
+            Some(client)
+        }
+        Err(err) => {
+            tracing::warn!("failed to connect to nats at {}: {err} — running without nats", config.nats_url);
+            None
+        }
+    };
+
+    let state = api::AppState::new(db, config.clone(), nats);
 
     let app = Router::new()
         .route("/api/health", get(api::health))

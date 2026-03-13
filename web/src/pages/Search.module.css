@@ -1,0 +1,88 @@
+.page {
+  padding: var(--space-6) var(--space-4);
+  max-width: 1200px;
+}
+
+.header {
+  margin-bottom: var(--space-6);
+}
+
+.title {
+  font-size: var(--font-2xl);
+  font-weight: var(--weight-bold);
+  margin-bottom: var(--space-4);
+}
+
+.resultCount {
+  font-size: var(--font-sm);
+  color: var(--text-secondary);
+  margin-bottom: var(--space-4);
+}
+
+.empty {
+  text-align: center;
+  padding: var(--space-16) var(--space-4);
+  color: var(--text-muted);
+}
+
+.emptyIcon {
+  font-size: var(--font-4xl);
+  margin-bottom: var(--space-4);
+}
+
+.emptyText {
+  font-size: var(--font-lg);
+}
+
+.emptyHint {
+  font-size: var(--font-sm);
+  margin-top: var(--space-2);
+}
+
+.history {
+  margin-top: var(--space-6);
+}
+
+.historyTitle {
+  font-size: var(--font-sm);
+  font-weight: var(--weight-semibold);
+  color: var(--text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  margin-bottom: var(--space-3);
+}
+
+.historyList {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-2);
+}
+
+.historyItem {
+  padding: var(--space-1) var(--space-3);
+  border-radius: var(--radius-full);
+  background: var(--bg-secondary);
+  border: 1px solid var(--border);
+  color: var(--text-secondary);
+  font-size: var(--font-sm);
+  cursor: pointer;
+  transition: background var(--transition-fast), color var(--transition-fast);
+}
+
+.historyItem:hover {
+  background: var(--bg-hover);
+  color: var(--text-primary);
+}
+
+.semanticBadge {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+  padding: var(--space-1) var(--space-3);
+  border-radius: var(--radius-full);
+  background: var(--accent-dim);
+  color: var(--accent);
+  font-size: var(--font-xs);
+  font-weight: var(--weight-medium);
+  margin-bottom: var(--space-4);
+}

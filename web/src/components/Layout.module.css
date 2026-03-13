@@ -1,0 +1,238 @@
+.layout {
+  display: flex;
+  min-height: 100vh;
+}
+
+/* --- Sidebar (Desktop) --- */
+.sidebar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: var(--sidebar-width);
+  height: 100vh;
+  background: var(--bg-secondary);
+  border-right: 1px solid var(--border);
+  display: flex;
+  flex-direction: column;
+  z-index: var(--z-nav);
+  transition: width var(--transition-normal);
+  overflow: hidden;
+}
+
+.sidebarCollapsed {
+  width: var(--sidebar-collapsed);
+}
+
+.sidebarHeader {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: var(--space-4);
+  height: var(--nav-height);
+  flex-shrink: 0;
+}
+
+.brand {
+  font-size: var(--font-xl);
+  font-weight: var(--weight-bold);
+  color: var(--accent);
+  text-decoration: none;
+  overflow: hidden;
+  white-space: nowrap;
+}
+
+.collapseBtn {
+  width: 32px;
+  height: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: var(--radius-sm);
+  color: var(--text-secondary);
+  font-size: var(--font-lg);
+  transition: background var(--transition-fast);
+  flex-shrink: 0;
+}
+
+.collapseBtn:hover {
+  background: var(--bg-hover);
+}
+
+.navSection {
+  padding: var(--space-2) var(--space-2);
+}
+
+.navSectionLabel {
+  font-size: var(--font-xs);
+  font-weight: var(--weight-semibold);
+  color: var(--text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  padding: var(--space-2) var(--space-3);
+  overflow: hidden;
+  white-space: nowrap;
+}
+
+.navLink {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  padding: var(--space-2) var(--space-3);
+  border-radius: var(--radius-md);
+  color: var(--text-secondary);
+  font-size: var(--font-sm);
+  font-weight: var(--weight-medium);
+  text-decoration: none;
+  transition: background var(--transition-fast), color var(--transition-fast);
+  overflow: hidden;
+  white-space: nowrap;
+}
+
+.navLink:hover {
+  background: var(--bg-hover);
+  color: var(--text-primary);
+}
+
+.navLinkActive {
+  background: var(--accent-dim);
+  color: var(--accent);
+}
+
+.navIcon {
+  font-size: var(--font-lg);
+  flex-shrink: 0;
+  width: 24px;
+  text-align: center;
+}
+
+.navLabel {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.sidebarCollapsed .navLabel,
+.sidebarCollapsed .navSectionLabel,
+.sidebarCollapsed .brand {
+  opacity: 0;
+  width: 0;
+}
+
+.sidebarFooter {
+  margin-top: auto;
+  padding: var(--space-4);
+  border-top: 1px solid var(--border);
+}
+
+.userInfo {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  overflow: hidden;
+}
+
+.userAvatar {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  background: var(--bg-elevated);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--accent);
+  font-size: var(--font-sm);
+  font-weight: var(--weight-bold);
+  flex-shrink: 0;
+}
+
+.userName {
+  font-size: var(--font-sm);
+  font-weight: var(--weight-medium);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+/* --- Main Content --- */
+.content {
+  flex: 1;
+  margin-left: var(--sidebar-width);
+  min-height: 100vh;
+  transition: margin-left var(--transition-normal);
+}
+
+.contentCollapsed {
+  margin-left: var(--sidebar-collapsed);
+}
+
+/* --- Bottom Bar (Mobile/Tablet) --- */
+.bottomBar {
+  display: none;
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: var(--bottom-bar-height);
+  background: var(--bg-secondary);
+  border-top: 1px solid var(--border);
+  z-index: var(--z-nav);
+  padding-bottom: env(safe-area-inset-bottom, 0);
+}
+
+.bottomBarInner {
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  height: 100%;
+}
+
+.bottomLink {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2px;
+  color: var(--text-secondary);
+  text-decoration: none;
+  font-size: var(--font-xs);
+  transition: color var(--transition-fast);
+  padding: var(--space-1) var(--space-3);
+}
+
+.bottomLink:hover,
+.bottomLinkActive {
+  color: var(--accent);
+}
+
+.bottomIcon {
+  font-size: 20px;
+}
+
+.bottomLabel {
+  font-size: 10px;
+  font-weight: var(--weight-medium);
+}
+
+/* --- Hide layout in player fullscreen --- */
+.hidden {
+  display: none !important;
+}
+
+/* --- Responsive --- */
+@media (max-width: 1023px) {
+  .sidebar {
+    display: none;
+  }
+
+  .content {
+    margin-left: 0;
+    padding-bottom: calc(var(--bottom-bar-height) + env(safe-area-inset-bottom, 0));
+  }
+
+  .contentCollapsed {
+    margin-left: 0;
+  }
+
+  .bottomBar {
+    display: block;
+  }
+}

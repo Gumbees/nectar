@@ -1,22 +1,32 @@
-import { createResource, For } from "solid-js";
-import { api } from "../lib/api";
+import { createResource, For, Show, Suspense } from "solid-js";
+import { fetchLibraries } from "../lib/api";
+import { ContinueWatching } from "../components/ContinueWatching";
+import { LibraryRow } from "../components/LibraryRow";
+import styles from "./Home.module.css";
 
 export function Home() {
-  const [libraries] = createResource(() => api("/api/v1/libraries"));
+  const [librariesData] = createResource(fetchLibraries);
+
+  const libraries = () => librariesData()?.libraries ?? [];
 
   return (
-    <div class="home">
-      <h1>Libraries</h1>
-      <div class="library-grid">
-        <For each={libraries()?.libraries ?? []}>
-          {(lib: any) => (
-            <a href={`/library/${lib.id}`} class="library-card">
-              <h2>{lib.name}</h2>
-              <span>{lib.library_type}</span>
-            </a>
-          )}
-        </For>
-      </div>
+    <div class={styles.page}>
+      <ContinueWatching />
+
+      <Show when={!librariesData.loading} fallback={
+        <div class={styles.loading}>Loading libraries...</div>
+      }>
+        <Show when={libraries().length > 0} fallback={
+          <div class={styles.empty}>
+            <div class={styles.emptyTitle}>No libraries yet</div>
+            <div class={styles.emptyText}>Add a library in Settings to get started.</div>
+          </div>
+        }>
+          <For each={libraries()}>
+            {(lib) => <LibraryRow library={lib} />}
+          </For>
+        </Show>
+      </Show>
     </div>
   );
 }
