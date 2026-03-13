@@ -1,0 +1,32 @@
+# Rust
+target/
+Cargo.lock
+
+# Node
+web/node_modules/
+web/dist/
+web/.vite/
+
+# Environment
+.env
+.env.local
+.env.*.local
+
+# IDE
+.idea/
+.vscode/
+*.swp
+*.swo
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Docker
+docker/data/
+
+# Transcoder work files
+/transcode-cache/
+
+# Claude
+.claude/

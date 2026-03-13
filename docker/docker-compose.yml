@@ -1,0 +1,74 @@
+services:
+  postgres:
+    image: pgvector/pgvector:pg17
+    restart: unless-stopped
+    ports:
+      - "5432:5432"
+    environment:
+      POSTGRES_DB: ${POSTGRES_DB:-nectar}
+      POSTGRES_USER: ${POSTGRES_USER:-nectar}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-nectar}
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+
+  nats:
+    image: nats:2-alpine
+    restart: unless-stopped
+    ports:
+      - "4222:4222"
+      - "8222:8222"
+    command: ["--js", "--http_port", "8222"]
+
+  server:
+    build:
+      context: ..
+      dockerfile: docker/Dockerfile.server
+    restart: unless-stopped
+    ports:
+      - "8096:8096"
+    environment:
+      NECTAR__DATABASE_URL: postgres://${POSTGRES_USER:-nectar}:${POSTGRES_PASSWORD:-nectar}@postgres:5432/${POSTGRES_DB:-nectar}
+      NECTAR__NATS_URL: nats://nats:4222
+      NECTAR__HOST: 0.0.0.0
+      NECTAR__PORT: 8096
+    volumes:
+      - ${MEDIA_PATH:-./media}:/media:ro
+    depends_on:
+      - postgres
+      - nats
+
+  transcoder:
+    build:
+      context: ..
+      dockerfile: docker/Dockerfile.transcoder
+    restart: unless-stopped
+    environment:
+      NECTAR_TRANSCODER__NATS_URL: nats://nats:4222
+      NECTAR_TRANSCODER__WORK_DIR: /tmp/transcode
+    volumes:
+      - ${MEDIA_PATH:-./media}:/media:ro
+      - transcode_cache:/tmp/transcode
+    depends_on:
+      - nats
+    # Uncomment for NVIDIA GPU passthrough:
+    # deploy:
+    #   resources:
+    #     reservations:
+    #       devices:
+    #         - driver: nvidia
+    #           count: all
+    #           capabilities: [gpu]
+
+  web:
+    build:
+      context: ..
+      dockerfile: docker/Dockerfile.web
+    restart: unless-stopped
+    ports:
+      - "3000:80"
+    depends_on:
+      - server
+
+volumes:
+  postgres_data:
+  transcode_cache:
